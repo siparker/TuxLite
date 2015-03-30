@@ -7,6 +7,10 @@
 
 source ./options.conf
 
+# get local ip address
+LOCAL_IP=`./functions/get_ip.py`
+
+
 # Detect distribution. Debian or Ubuntu
 DISTRO=`lsb_release -i -s`
 # Distribution's release. Squeeze, wheezy, precise etc
@@ -31,7 +35,7 @@ function basic_server_setup {
     service ssh reload
 
     # Set hostname and FQDN
-    sed -i 's/'${SERVER_IP}'.*/'${SERVER_IP}' '${HOSTNAME_FQDN}' '${HOSTNAME}'/' /etc/hosts
+    sed -i 's/'${LOCAL_IP}'.*/'${LOCAL_IP}' '${HOSTNAME_FQDN}' '${HOSTNAME}'/' /etc/hosts
     echo "$HOSTNAME" > /etc/hostname
 
     if [ $DISTRO = "Debian" ]; then

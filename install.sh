@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 # First uninstall any unnecessary packages and ensure that aptitude is installed. 
 apt-get update
 #apt-get -y install aptitude
@@ -15,6 +17,28 @@ apt-get update
 #echo "Configuring /etc/apt/sources.list."
 #sleep 5
 #./setup.sh apt
+
+# choose webserver
+while true; do
+        echo -n "Do you want to install Nginx 1 or Apache 2 "; read NGINX_APACHE;
+
+        if [ "$NGINX_APACHE" != '1' -a "$NGINX_APACHE" != '2' ]; then
+                echo -e "\033[31minput error! Please only input '1' or '2'\033[0m"
+        elif [ "$NGINX_APACHE" == "2" ]; then
+                sed -i 's/^WEBSERVER=[0-9]*/WEBSERVER='${NGINX_APACHE}'/' ./options.conf
+                echo "Using Apache"
+                break
+        else
+                sed -i 's/^WEBSERVER=[0-9]*/WEBSERVER='${NGINX_APACHE}'/' ./options.conf
+                echo "using Nginx"
+                break
+        fi
+
+done
+
+echo "should have set it to:  $NGINX_APACHE"
+
+
 
 echo ""
 echo "Installing updates & configuring SSHD / hostname."

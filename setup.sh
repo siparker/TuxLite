@@ -7,8 +7,7 @@
 
 source ./options.conf
 
-# get local ip address
-LOCAL_IP=`./functions/get_ip.py`
+
 
 
 # Detect distribution. Debian or Ubuntu
